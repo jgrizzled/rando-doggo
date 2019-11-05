@@ -3,27 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="View random dog images">
+  <meta name="description" content="random dog images">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
   <link href="https://fonts.googleapis.com/css?family=McLaren&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  <title>Random Dog Images!</title>
+  <title>Rando Doggos</title>
 </head>
 <body>
   <header>
-    <h1>Random Dog Images!</h1>
+    <h1>Random Doggos!</h1>
     <form>
-      <label for="amount">Images to load:</label>
-      <input type="text" name="amount" id="amount" value="3" required>
-      <label for="breed">Breed:</label>
-      <select name="breed" id="breed">
-        <option value="any">Any</option>
-      </select>
+      <div>
+        <label for="amount">Doggos to load:</label>
+        <input type="text" name="amount" id="amount" value="3" required>
+      </div>
+      <div>
+        <label for="breed">Breed:</label>
+        <select name="breed" id="breed">
+          <option value="any">Any</option>
+        </select>
+      </div>
       <input type="submit" value="Go!">
     </form>
   </header>
   <main></main>
+  <div class="dialog-container">
+    <div class="overlay"></div>
+    <div class="dialog">
+      <span class="close">X</span>
+      <img id="img-modal" alt="big dog">
+    </div>
+  </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="app.js"></script>
 </body>

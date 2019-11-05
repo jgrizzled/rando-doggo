@@ -1,6 +1,7 @@
 html, * {
   color: #002B3E;
   font-family: 'McLaren', cursive;
+  box-sizing: border-box;
 }
 
 body {
@@ -9,52 +10,126 @@ body {
 
 header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   background: #F8F5A6;
-  padding: 0.5% 10%;
+  padding: 0.5rem 0;
   margin-bottom: 1rem;
+}
+
+@media only screen and (max-width: 1024px) {
+  header {
+    flex-direction: column;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  form {
+    flex-direction: column;
+  }
+  form div {
+    margin-bottom: 10px;
+  }
 }
 
 h1 {
   font-size: 1rem;
-  margin: 0;
+  margin: 0 auto;
 }
 
 form {
   display: flex;
   align-items: center;
-  margin: 0;
+  margin: 0 auto;
   padding: 0;
-  border-radius: 5px;
+}
+
+label {
+  margin: auto auto;
 }
 
 input[type=text] {
   border-radius: 4px;
-  margin-left: 0.5rem;
-  margin-right: 2rem;
+  margin: 0.5rem 2rem 0.5rem 0.5rem;
+  width: 2rem;
+  padding: 3px;
+}
+
+select * {
+  margin: 0 2rem 0 0.5rem;
+  font-family: 'McLaren', sans-serif;
 }
 
 input[type=submit] {
   border-radius: 4px;
-  padding: 0.3rem;
-}
-
-select {
-  margin-left: 0.5rem;
-  margin-right: 2rem;
+  padding: 5px;
+  margin: 0 0 0 1rem;
+  background: #e6e6e6;
 }
 
 main {
+  margin: 0 1rem;
   display: grid;
-  grid-template-columns: 25% 25% 25% 25%;
-  grid-row-gap: 1rem;
-  align-items: center;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-gap: 2px;
   justify-items: center;
 }
 
-img {
-  width: 90%;
-  border: 2px solid white;
-  border-radius: 5px;
+.dog {
+  display: inline-block;
+  height: 200px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.dialog-container {
+  z-index: 1;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.overlay {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  background: rgba(255,255,255,0.55);
+}
+
+.dialog {
+  z-index: 2;
+  position: relative;
+  background: #F8F5A6;
+  border: 2px solid #002B3E;
+  padding: 0;
+  max-height: 70vh;
+  max-width: 99vw;
+}
+
+.dialog img {
+  display: block;
+  border: 2px solid #F8F5A6;
+  margin: 0;
+  padding: 0;
+  object-fit: contain;
+  max-height: 69vh;
+  max-width: 98vw;
+}
+
+.close {
+  font-weight: bold;
+  font-size: 2rem;
+  color: white;
+  position: absolute;
+  top: 15px;
+  right: 25px;
+}
+
+.close:hover {
+  cursor: pointer;
 }
