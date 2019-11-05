@@ -1,0 +1,60 @@
+html, * {
+  color: #002B3E;
+  font-family: 'McLaren', cursive;
+}
+
+body {
+  background: #90C4E3;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #F8F5A6;
+  padding: 0.5% 10%;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-size: 1rem;
+  margin: 0;
+}
+
+form {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  border-radius: 5px;
+}
+
+input[type=text] {
+  border-radius: 4px;
+  margin-left: 0.5rem;
+  margin-right: 2rem;
+}
+
+input[type=submit] {
+  border-radius: 4px;
+  padding: 0.3rem;
+}
+
+select {
+  margin-left: 0.5rem;
+  margin-right: 2rem;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
+  grid-row-gap: 1rem;
+  align-items: center;
+  justify-items: center;
+}
+
+img {
+  width: 90%;
+  border: 2px solid white;
+  border-radius: 5px;
+}
