@@ -6,7 +6,9 @@ function fetchBreeds() {
     .then((json) => {
       populateBreedOptions(json.message);
     })
-    .catch((e) => {console.log('Error fetching breeds: ' + e)});
+    .catch((e) => {
+      $('main').html('<p><b>Error fetching breeds list:</b><br>' + e + '</p>');
+    });
 }
 
 //populate select box with breed JSON
@@ -68,7 +70,9 @@ function fetchDogImages(amount, breed) {
     .then(responseJSON => {
       renderImages(responseJSON.message);
     })
-    .catch((e) => {console.log('Error fetching images: ' + e)});
+    .catch((e) => {
+      $('main').html('<p><b>Error fetching images:</b><br>' + e + '</p>');
+    });
 }
 
 //write image URL list to DOM
