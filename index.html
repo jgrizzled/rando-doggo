@@ -13,16 +13,20 @@
 <body>
   <header>
     <h1>Random Doggos!</h1>
+
     <form>
       <div>
-        <label for="amount">Doggos to load:</label>
-        <input type="text" name="amount" id="amount" value="3" required>
+          <span class="radio"><input type="radio" name="query-type" value="random" checked>Show random dogs</span>
+          <span class="radio"><input type="radio" name="query-type" value="breed">Show dog breed</span>
       </div>
-      <div>
+      <div id="random-form">
+        <label for="amount">Doggos to load:</label>
+        <input type="number" min="1" max="50" name="amount" id="amount" value="3" required>
+      </div>
+      <div id="breed-form">
         <label for="breed">Breed:</label>
-        <select name="breed" id="breed">
-          <option value="any">Any</option>
-        </select>
+        <input id="breed" list="breeds">
+        <datalist id="breeds"></datalist>
       </div>
       <input type="submit" value="Go!">
     </form>

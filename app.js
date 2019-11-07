@@ -1,10 +1,11 @@
 'use strict';
+const breedsList = [];
 //download breed list
 function fetchBreeds() {
   fetch('https://dog.ceo/api/breeds/list/all')
     .then(response => response.json())
     .then((json) => {
-      populateBreedOptions(json.message);
+      populateBreedList(json.message);
     })
     .catch((e) => {
       $('main').html('<p><b>Error fetching breeds list:</b><br>' + e + '</p>');
@@ -12,13 +13,12 @@ function fetchBreeds() {
 }
 
 //populate select box with breed JSON
-function populateBreedOptions(breeds) {
-  const formattedBreeds = [];
+function populateBreedList(breeds) {
   //build formatted array from JSON
   for(let breed in breeds) {
     if(breeds[breed].length > 0) {
       breeds[breed].forEach((type) => {
-        formattedBreeds.push(
+        breedsList.push(
           {
             name: capitalize(type)+' '+capitalize(breed),
             url: breed+'/'+type
@@ -26,7 +26,7 @@ function populateBreedOptions(breeds) {
         );
       });
     } else {
-        formattedBreeds.push(
+        breedsList.push(
           {
             name: capitalize(breed),
             url: breed
@@ -34,22 +34,23 @@ function populateBreedOptions(breeds) {
     }
   }
   //sort array alphabetically
-  formattedBreeds.sort((a, b) => {
+  breedsList.sort((a, b) => {
     if(a.name < b.name) 
       return -1;
     else if(a.name > b.name)
       return 1;
     return 0;
   });
+
   //write to DOM
-  const select = $('select');
-  formattedBreeds.forEach((breed) => {
-    select.append(`<option value="${breed.url}">${breed.name}</option>`);
+  const datalist = $('datalist');
+  breedsList.forEach((breed) => {
+    datalist.append(`<option value="${breed.name}">`);
   });
 }
 
 //download dog image URL list
-function fetchDogImages(amount, breed) {
+function randomDogImages(amount) {
   if(isNaN(amount))
     amount = 3;
   else if(amount < 1)
@@ -57,22 +58,41 @@ function fetchDogImages(amount, breed) {
   else if(amount > 50)
     amount = 50;
 
-  let url = '';
-  if(breed === 'any' || breed === undefined)
-    url = 'https://dog.ceo/api/breeds/image/random/';
-  else
-    url = 'https://dog.ceo/api/breed/' + breed + '/images/random/';
+  let url = 'https://dog.ceo/api/breeds/image/random/';
 
   url += parseInt(amount);
 
+  fetchDogImages(url)
+}
+
+function fetchDogImages(url) {
   fetch(url)
-    .then(response => response.json())
+    .then(response => {
+      if(!response.ok)
+        throw new Error(response.status)
+      return response.json();
+    })
     .then(responseJSON => {
       renderImages(responseJSON.message);
     })
     .catch((e) => {
-      $('main').html('<p><b>Error fetching images:</b><br>' + e + '</p>');
+      if(e.toString().includes('404'))
+        $('main').html('<p><b>Error!</b><br>Breed not found</p>');
+      else
+        $('main').html('<p><b>Error!</b><br>'+e+'</p>');
     });
+}
+
+function breedDogImage(breed) {
+  let breedURL = breed;
+  for(const breedObj of breedsList) {
+    if(breedObj.name.toLowerCase() == breed.toLowerCase()) {
+      breedURL = breedObj.url;
+      break;
+    }
+  }
+  const url = 'https://dog.ceo/api/breed/' + breedURL + '/images/random/1';
+  fetchDogImages(url)
 }
 
 //write image URL list to DOM
@@ -89,8 +109,10 @@ function handleSubmit(e) {
   e.preventDefault();
   const amount = $('form').find('#amount').val();
   const breed = $('form').find('#breed').val();
-  if(!isNaN(amount))
-    fetchDogImages(amount, breed);
+  if($('input[name=query-type]:checked').val() == 'random')
+    randomDogImages(amount);
+  else if($('input[name=query-type]:checked').val() == 'breed')
+    breedDogImage(breed);
 }
 
 //img click handler to toggle modal
@@ -116,9 +138,23 @@ function capitalize(s) {
   return s[0].toUpperCase() + s.slice(1);
 }
 
+function displayForm(e) {
+  if($('input[name=query-type]:checked').val() == 'random') {
+    $('#breed-form').hide()
+    $('#random-form').show()
+  }
+else if($('input[name=query-type]:checked').val() == 'breed') {
+  $('#random-form').hide()
+  $('#breed-form').show()
+}
+}
+
 $(() => {
   $('.dialog-container').hide();
+  $('#breed-form').hide()
+  $('#random-form').show()
   $('form').on('submit', handleSubmit);
   $('main').on('click', '.dog', handleImgClick);
+  $('input[name=query-type]').on('click', displayForm);
   fetchBreeds();
 });

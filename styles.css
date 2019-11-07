@@ -17,28 +17,15 @@ header {
   margin-bottom: 1rem;
 }
 
-@media only screen and (max-width: 1024px) {
-  header {
-    flex-direction: column;
-  }
-}
-
-@media only screen and (max-width: 600px) {
-  form {
-    flex-direction: column;
-  }
-  form div {
-    margin-bottom: 10px;
-  }
-}
-
 h1 {
   font-size: 1rem;
   margin: 0 auto;
 }
 
 form {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-column-gap: 3rem;
   align-items: center;
   margin: 0 auto;
   padding: 0;
@@ -55,9 +42,8 @@ input[type=text] {
   padding: 3px;
 }
 
-select * {
-  margin: 0 2rem 0 0.5rem;
-  font-family: 'McLaren', sans-serif;
+.radio {
+  margin-right: 2rem;
 }
 
 input[type=submit] {
@@ -133,3 +119,21 @@ main {
 .close:hover {
   cursor: pointer;
 }
+
+@media only screen and (max-width: 900px) {
+  form {
+    display: grid;
+    grid-template-rows: auto auto auto auto;
+    grid-template-columns: 1fr;
+  }
+  form div {
+    margin-bottom: 10px;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  header {
+    flex-direction: column;
+  }
+}
+
